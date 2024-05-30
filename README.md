@@ -9,11 +9,11 @@ JOINT REPO-WORKING ON PROJECT FE_B2C
 
 ## Create Your New Branch
 
-**git checkout -b {your-branch-name: b-team_b2c/(name/feature}**
+**git checkout -b {your-branch-name: B-Team_B2C/(name/feature}**
 
 ## Push Your New Branch into repository GitHub:
 
-**git push -u origin {your-branch-name: b-team_b2c/(name/feature}**
+**git push -u origin {your-branch-name: B-Team_B2C/(name/feature}**
 
 ## Fetch when update from remote repository:
 
