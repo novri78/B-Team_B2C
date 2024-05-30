@@ -9,6 +9,6 @@ git clone git@github.com:novri78/B-Team_B2C.git
 ## Create Your New Branch
 git checkout -b {your-branch-name: B-Team_B2C/(name/feature}
 
-## Push branch baru ke repository GitHub:
+## Push Your New Branch into repository GitHub:
 
 git push -u origin {your-branch-name: B-Team_B2C/(name/feature}
