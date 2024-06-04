@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <input type="text" v-model="searchQuery" placeholder="Search...">
+  <div class="table-container">
+    <div class="search-filter-container">
+      <input type="text" v-model="searchQuery" placeholder="Search...">
+      <!-- Filter by name dropdown -->
+      <select v-model="selectedName" @change="filterByName">
+        <option value="">All Names</option>
+        <option v-for="name in uniqueNames" :key="name" :value="name">{{ name }}</option>
+      </select>
+    </div>
     
     <table v-if="filteredData.length">
       <thead>
@@ -14,14 +21,14 @@
           <td>{{ item.name }}</td>
           <td>{{ itemDetails(item) }}</td>
           <td>{{ getPriceList(item) }}</td>
-          <td><img :src="getImagePath(item.id)" alt="Product Image" style="width: 50px; height: 50px"></td> <!-- Add image column -->
+          <td><img :src="getImagePath(item.id)" :alt="`Img of ${item.name}`" class="product-image"></td> <!-- Add image column -->
         </tr>
       </tbody>
       <!-- Add new row for Total Price -->
       <tfoot>
         <tr>
-          <td :colspan="tableKeys.length - 2" style="text-align: right; font-weight: bold;">Total Price:</td>
-          <td style="font-weight: bold;">{{ calculateTotalPrice.toFixed(2) }}</td>
+          <td :colspan="tableKeys.length - 2" class="total-price-label">Total Price:</td>
+          <td class="total-price-value">{{ calculateTotalPrice.toFixed(2) }}</td>
         </tr>
       </tfoot>
     </table>
@@ -37,6 +44,7 @@ export default {
   data() {
     return {
       searchQuery: '',
+      selectedName: '',
     };
   },
   computed: {
@@ -45,12 +53,17 @@ export default {
       return ['id', 'name', 'Details', 'Price_List', 'Image']; // Update tableKeys
     },
     filteredData() {
-      return this.getData.filter(item => {
-        // Filter based on search query
+      let data = this.getData.filter(item => {
         return Object.values(item).some(value =>
           String(value).toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       });
+
+      if (this.selectedName) {
+        data = data.filter(item => item.name === this.selectedName);
+      }
+
+      return data;
     },
     calculateTotalPrice() {
       return this.filteredData.reduce((total, item) => {
@@ -59,6 +72,10 @@ export default {
         }
         return total;
       }, 0);
+    },
+    uniqueNames() {
+      const names = this.getData.map(item => item.name);
+      return [...new Set(names)];
     }
   },
   methods: {
@@ -80,6 +97,10 @@ export default {
     },
     getImagePath(id) {
       return require(`@/assets/img/${id}.jpg`);
+    },
+    filterByName() {
+      // Trigger the computed property to re-evaluate by simply accessing it
+      return this.filteredData;
     }
   },
   created() {
@@ -89,24 +110,49 @@ export default {
 </script>
 
 <style scoped>
+.table-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+input[type="text"], select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
+
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
-}
-th {
-  background-color: #f2f2f2;
+  padding: 10px;
   text-align: left;
 }
-tfoot td {
-  border-top: 2px solid #000;
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
-input {
-  margin-bottom: 10px;
-  padding: 5px;
+
+tfoot td {
   border: 1px solid #ddd;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
 }
 </style>

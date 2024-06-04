@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>All Data Simple List</h2>
-    <h3>Filter And Select Item</h3>
+    <h3>Search, Filter And Select Item</h3>
     <TableView />
   </div>
 </template>
