@@ -2,6 +2,18 @@
   <div class="table-container">
     <div class="search-filter-container">
       <input type="text" v-model="searchQuery" placeholder="Search...">
+      <!-- Multi-select filter by name dropdown -->
+      <multiselect 
+        v-model="selectedNames" 
+        :options="uniqueNames" 
+        placeholder="Filter by names" 
+        :multiple="true" 
+        :close-on-select="false" 
+        :clear-on-select="false" 
+        :preserve-search="true"
+        track-by="name" 
+        label="name">
+      </multiselect>
       <!-- Filter by name dropdown -->
       <select v-model="selectedName" @change="filterByName">
         <option value="">All Names</option>
