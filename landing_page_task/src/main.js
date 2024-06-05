@@ -9,8 +9,6 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 import './assets/css/style.css';
 import './assets/scss/_style.scss';
 
-
-
 createApp(App)
   .use(router)
   .use(store)
