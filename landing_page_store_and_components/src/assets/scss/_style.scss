@@ -1,0 +1,130 @@
+/* Styles for the navigation bar */
+nav {
+  padding: 30px;
+  background: #2c3e50;
+  text-align: center;
+}
+
+a {
+  font-weight: bold;
+  color: #ecf0f1;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a.router-link-exact-active {
+  color: #42b983;
+}
+
+a:hover {
+  color: #3498db;
+}
+
+/* Styles for the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  min-width: 400px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #4D6BB9;
+  color: #ffffff;
+}
+
+tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+/* Styles for images */
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for select and input */
+select, input[type="text"], input[type="number"] {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background: #ffffff;
+  font-size: 1em;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px 0;
+}
+
+select:focus, input[type="text"]:focus, input[type="number"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+/* Additional styling for a more digital look */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(145deg, #6b7cff, #4865f4);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #7a8dff, #5975f9);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  nav {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 0.9em;
+  }
+
+  select, input[type="text"], input[type="number"] {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+
+  button {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+}
+
+.total-price-label {
+  text-align: left;
+  font-weight: bold;
+}
+
+.total-price-value {
+  text-align: left;
+  font-weight: bold;
+}
+
+td {
+  text-align: right;
+}

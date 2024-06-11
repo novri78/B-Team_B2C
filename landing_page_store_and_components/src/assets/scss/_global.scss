@@ -1,0 +1,18 @@
+/* Styles for the main app */
+#app {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  padding: 20px;
+  background: #ecf0f1;
+}
+
+/* Global styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f6fa;
+  color: #2c3e50;
+  line-height: 1.6;
+}
