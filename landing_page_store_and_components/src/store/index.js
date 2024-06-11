@@ -115,25 +115,37 @@ export default createStore({
     selectedItems: [],
   },
   getters: {
-    filteredData: (state) => {
-      let data = state.listData.filter(item => {
-        return Object.values(item).some(value =>
-          String(value).toLowerCase().includes(state.searchQuery.toLowerCase())
+    filteredData(state) {
+      // Jika tidak ada kueri pencarian dan tidak ada nama yang dipilih, kembalikan semua data
+      if (!state.filterSearch && !state.selectedName) {
+        return state.listData; // Mengembalikan semua data jika tidak ada filter pencarian dan nama yang dipilih
+      }
+      
+      let data = state.listData;
+    
+      // Jika ada kueri pencarian, filter data berdasarkan pencarian
+      if (state.filterSearch) {
+        data = data.filter(item =>
+          item.name.toLowerCase().includes(state.filterSearch.toLowerCase())
         );
-      });
-
+      }
+    
+      // Jika ada nama yang dipilih, filter data berdasarkan nama yang dipilih
       if (state.selectedName) {
         data = data.filter(item => item.name === state.selectedName);
-        // if(state.selectedItems.length !== 0) {
-        //   state.selectedItems = [];
-        // }
-          
-        // state.selectedItems.push(data);
-        // console.log('filter', state.selectedItems)
       }
-
-      return data;
+    
+      // Jika ada item yang dipilih, perbarui state.selectedItems
+      if (data.length > 0) {
+        state.selectedItems = data; // Atur state.selectedItems ke data yang difilter
+        console.log('filter', state.selectedItems); // Log hasil filter
+      } else {
+        state.selectedItems = []; // Kosongkan state.selectedItems jika tidak ada data yang sesuai
+      }
+    
+      return data; // Kembalikan data yang sudah difilter
     },
+    
     itemDetails: (state) => (item) => {
       if (!item.data) return 'No Data Available';
       return Object.entries(item.data)
@@ -191,6 +203,14 @@ export default createStore({
     },
     SET_SELECTED_ITEMS(state, selectedItems) {
       state.selectedItems = selectedItems;
+    },
+    TOGGLE_ITEM_SELECTION(state, item) {
+      const index = state.selectedItems.findIndex(i => i.id === item.id);
+      if (index >= 0) {
+        state.selectedItems.splice(index, 1); // Hapus item dari daftar jika sudah ada
+      } else {
+        state.selectedItems.push(item); // Tambahkan item ke daftar jika belum ada
+      }
     },
   },
 });

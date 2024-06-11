@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="table-container">
-      <SearchFilterComponent />
+      <SearchFilterComponent/>
     </div>
     <!-- Show when data exist -->
     <table v-if="filteredData.length">
@@ -19,7 +19,7 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ itemDetails(item) }}</td>
-          <td>{{ getPriceList(item) }}</td>
+          <td>{{ '$' +  getPriceList(item) }}</td>
           <td>
             <img :src="getImagePath(item.id)" :alt="item.name" />
           </td>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import SearchFilterComponent from "./SearchFilterComponent.vue";
 import CalculatePriceComponent from "./CalculatePriceComponent.vue";
 
@@ -52,8 +52,15 @@ export default {
     ]),
   },
   methods: {
+    ...mapMutations(["TOGGLE_ITEM_SELECTION"]),
+    // filterByName() {
+    //   return this.filteredData;
+    // },
     getImagePath(id) {
       return require(`@/assets/img/${id}.jpg`);
+    },
+    toggleSelection(item) {
+      this.TOGGLE_ITEM_SELECTION(item, 0);
     },
   },
 };
