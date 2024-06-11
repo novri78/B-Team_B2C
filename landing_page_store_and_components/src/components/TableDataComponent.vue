@@ -19,7 +19,7 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ itemDetails(item) }}</td>
-          <td>{{ '$' +  getPriceList(item) }}</td>
+          <td>{{ '$ ' +  getPriceList(item) }}</td>
           <td>
             <img :src="getImagePath(item.id)" :alt="item.name" />
           </td>
@@ -53,9 +53,6 @@ export default {
   },
   methods: {
     ...mapMutations(["TOGGLE_ITEM_SELECTION"]),
-    // filterByName() {
-    //   return this.filteredData;
-    // },
     getImagePath(id) {
       return require(`@/assets/img/${id}.jpg`);
     },

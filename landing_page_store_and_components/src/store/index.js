@@ -171,12 +171,7 @@ export default createStore({
         console.log(state.selectedItems)
       }
   
-      state.selectedItems.forEach((item) => {
-        // if (item.data && (item.data.price > 0 || item.data.Price > 0)) {
-        //   console.log(item.data.price + "atau" + item.data.Price )
-        //   total += parseFloat(item.data.price || item.data.Price);
-        // }
-        
+      state.selectedItems.forEach((item) => {       
         if (item.data && item.data.price) {
           total += parseFloat(item.data.price);
         }

@@ -29,11 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters(["uniqueNames"]),
-    // searchQuery: {
-    //   set(value) {
-    //     this.$store.commit("SET_SEARCH_QUERY", value);
-    //   },
-    // },
+    
     selectedName: {
       get() {
         return this.$store.state.selectedName;

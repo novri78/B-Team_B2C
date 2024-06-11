@@ -1,7 +1,7 @@
 <template>
     <tfoot>
         <td colspan="3" class="total-price-label">Total Price: </td>
-        <td class="total-price-value">{{'$' + calculateTotalPrice }}</td>
+        <td class="total-price-value">{{'$ ' + calculateTotalPrice }}</td>
     </tfoot>
 </template>
 
