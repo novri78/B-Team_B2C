@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="table-container">
-      <SearchFilterComponent/>
+      <SearchFilterComponent />
     </div>
+
     <!-- Show when data exist -->
     <table v-if="filteredData.length">
       <thead>
@@ -12,6 +13,7 @@
           <th>Details</th>
           <th>Price</th>
           <th>Image</th>
+          <th colspan="2" class="action-head">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -19,9 +21,13 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ itemDetails(item) }}</td>
-          <td>{{ '$ ' +  getPriceList(item) }}</td>
+          <td>{{ formatGetPriceList(item) }}</td>
           <td>
             <img :src="getImagePath(item.id)" :alt="item.name" />
+          </td>
+          <td><button @click="goToUpdate(item.id)" class="update-data">Update</button></td>
+          <td>
+            <button @click="goToDelete(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -30,17 +36,28 @@
     <!-- Message if there is no Data -->
     <p v-else>No data available</p>
   </div>
+  <StatisticsTable />
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import SearchFilterComponent from "./SearchFilterComponent.vue";
 import CalculatePriceComponent from "./CalculatePriceComponent.vue";
+import StatisticsTable from './StatisticsTable.vue';
 
 export default {
+  data() {
+    return {
+      isUpdateFormVisible: false,
+      isDeleteFormVisible: false,
+      currentItem: null,
+      currentItemId: null,
+    };
+  },
   components: {
     SearchFilterComponent,
     CalculatePriceComponent,
+    StatisticsTable
   },
   computed: {
     ...mapGetters([
@@ -49,69 +66,28 @@ export default {
       "getPriceList",
       "calculateTotalPrice",
       "uniqueNames",
+      "formatGetPriceList",
+      "formatCalculateTotalPrice",
+      "exchangeRate"
     ]),
   },
   methods: {
-    ...mapMutations(["TOGGLE_ITEM_SELECTION"]),
+    ...mapMutations(["TOGGLE_ITEM_SELECTION", "SET_EXCHANGE_RATE"]),
+    updateExchangeRate(event) {
+      this.setExchangeRate(event.target.value);
+    },
     getImagePath(id) {
       return require(`@/assets/img/${id}.jpg`);
     },
     toggleSelection(item) {
       this.TOGGLE_ITEM_SELECTION(item, 0);
     },
+    goToUpdate(id) {
+      this.$router.push(`/dataTable/update/${id}`);
+    },
+    goToDelete(id) {
+      this.$router.push(`/dataTable/delete/${id}`);
+    }
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.table-container {
-  margin-bottom: 20px;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-  padding: 15px;
-  text-align: left;
-}
-
-thead th {
-  background-color: #007bff;
-  color: white;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-tfoot td {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-}
-
-.total-price-label {
-  text-align: right;
-}
-
-.total-price-value {
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  th, td {
-    padding: 10px;
-  }
-
-  .data-table {
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-</style>

@@ -1,18 +1,21 @@
 <template>
-    <tfoot>
-        <td colspan="3" class="total-price-label">Total Price: </td>
-        <td class="total-price-value">{{'$ ' + calculateTotalPrice }}</td>
-    </tfoot>
+  <tfoot class="total-price">
+    <td colspan="3" class="total-price-label">Total Price:</td>
+    <td class="total-price-value">
+      {{ formatCalculateTotalPrice }}
+    </td>
+  </tfoot>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters, mapState } from "vuex";
 
 export default {
-    computed: {
-       ...mapGetters(["filteredData"]),
-       calculateTotalPrice() {
-        let total = 0;
+  computed: {
+    ...mapState(["exchangeRate"]),
+    ...mapGetters(["filteredData","calculateTotalPrice"]),
+    calculateTotalPrice() {
+      let total = 0;
       this.filteredData.forEach((item) => {
         if (item.data && item.data.price) {
           total += parseFloat(item.data.price);
@@ -22,7 +25,11 @@ export default {
         }
       });
       return total;
-       }
     },
-}
+    formatCalculateTotalPrice() {
+      const totalPrice = this.calculateTotalPrice;      
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalPrice * this.exchangeRate );
+    },
+  },
+};
 </script>

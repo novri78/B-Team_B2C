@@ -19,6 +19,21 @@ const routes = [
     path: '/dataTable',
     name: 'dataTable',
     component: () => import('../views/DataTableView.vue')
+  },
+  {
+    path: '/dataTable/create',
+    name: '/dataTable/create',
+    component: () => import('../views/CreateDataComponent.vue')
+  },
+  {
+    path: '/dataTable/update/:id',
+    name: '/dataTable/update/:id',
+    component: () => import('../views/UpdateDataComponent.vue')
+  },
+  {
+    path: '/dataTable/delete/:id',
+    name: '/dataTable/delete/:id',
+    component: () => import('../views/DeleteDataComponent.vue')
   }
 ]
 
