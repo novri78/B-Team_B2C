@@ -37,3 +37,8 @@ export default {
   }
 };
 </script>
+<style>
+.delete-confirmation {
+  margin-top: 20px;
+}
+</style>

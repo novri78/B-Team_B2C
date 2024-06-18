@@ -7,10 +7,18 @@
 
 <script>
 import TableDataComponent from "@/components/TableDataComponent.vue";
+import LogoutComponent from "@/components/LogoutComponent.vue";
 
 export default {
   components: {
-    TableDataComponent
+    LogoutComponent,
+    TableDataComponent,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+h2 {
+  margin-top: 20px;
+}
+</style>

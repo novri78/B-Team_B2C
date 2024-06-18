@@ -6,8 +6,7 @@
       v-model="searchQuery"
       id="filterProduct"
       placeholder="Search..."
-    />|
-    <button @click="emitSearch">Search</button>|
+    />| <button @click="emitSearch">Search</button>|
     <select v-model="selectedName" @change="filterByName">
       <option value="">All Names</option>
       <option v-for="name in uniqueNames" :key="name" :value="name">
@@ -17,11 +16,7 @@
 
     <div class="exchange-rate">
       <label id="exchange-rate">Exchange Rate (USD to IDR): </label>
-      <input
-        type="number"
-        v-model.number="exchangeRate"
-        id="exchange-rate"        
-      />
+      <input type="number" v-model.number="exchangeRate" id="exchange-rate" />
     </div>
 
     <td><button @click="goToCreate()" class="create-data">+Add</button></td>
@@ -34,7 +29,7 @@ import CreateDataComponent from "../views/CreateDataComponent.vue";
 
 export default {
   components: {
-    CreateDataComponent
+    CreateDataComponent,
   },
   data() {
     return {
@@ -43,7 +38,7 @@ export default {
       isUpdateFormVisible: false,
       isDeleteFormVisible: false,
       currentItem: null,
-      currentItemId: null
+      currentItemId: null,
     };
   },
   computed: {
@@ -57,7 +52,7 @@ export default {
       "formatGetPriceList",
       "formatCalculateTotalPrice",
       "exchangeRate",
-      ]),
+    ]),
 
     selectedName: {
       get() {
@@ -82,13 +77,9 @@ export default {
       "SET_SELECTED_NAME",
       "SET_EXCHANGE_RATE",
     ]),
-    ...mapActions([
-      "addItem",
-      "updateItem",
-      "deleteItem"
-    ]),
+    ...mapActions(["addItem", "updateItem", "deleteItem"]),
     goToCreate() {
-      this.$router.push('/dataTable/create');
+      this.$router.push("/dataTable/create");
     },
     updateSearchQuery(event) {
       this.SET_SEARCH_QUERY(event.target.value);
@@ -103,7 +94,7 @@ export default {
       this.$store.commit("SET_EXCHANGE_RATE", this.exchangeRate);
     },
     addItem() {
-      this.$router.push({ name: 'Create' });
+      this.$router.push({ name: "Create" });
     },
   },
 };

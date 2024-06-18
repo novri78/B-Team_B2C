@@ -1,45 +1,77 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '@/views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
+import LoginComponent from '@/components/LoginComponent.vue'
+import DataTableView from '@/views/DataTableView.vue'
+import CreateDataComponent from '@/views/CreateDataComponent.vue'
+import UpdateDataComponent from '@/views/UpdateDataComponent.vue'
+import DeleteDataComponent from '@/views/DeleteDataComponent.vue'
+import store from '@/store'; // Import the Vuex store
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: { requiresAuth: true },
+    
   },
   {
+    path: '/login',
+    component: LoginComponent,    
+  },
+  
+  {
     path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: AboutView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/dataTable',
-    name: 'dataTable',
-    component: () => import('../views/DataTableView.vue')
+    component: DataTableView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/dataTable/create',
-    name: '/dataTable/create',
-    component: () => import('../views/CreateDataComponent.vue')
+    component: CreateDataComponent,
+    meta: { requiresAuth: true },
   },
   {
     path: '/dataTable/update/:id',
-    name: '/dataTable/update/:id',
-    component: () => import('../views/UpdateDataComponent.vue')
+    component: UpdateDataComponent,
+    meta: { requiresAuth: true },
   },
   {
     path: '/dataTable/delete/:id',
-    name: '/dataTable/delete/:id',
-    component: () => import('../views/DeleteDataComponent.vue')
+    component: DeleteDataComponent,
+    meta: { requiresAuth: true },
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeEach((to, _from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = store.getters.isAuthenticated;
+
+  //debugging:
+  console.log("Navigating to:", to.path);
+  console.log("Requires Auth:", requiresAuth);
+  console.log("Is Authenticated:", isAuthenticated);
+
+  if (requiresAuth && !isAuthenticated) {
+    //debugging
+    console.log("Unauthorized access, redirecting to login page.");
+
+    next('/login');
+  } else {
+    //debugging
+    console.log("Authorized access, proceeding to destination.");
+    
+    next();
+  }
+});
+
+export default router;
