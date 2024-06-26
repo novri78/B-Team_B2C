@@ -3,7 +3,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["isLoggedIn"]),
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
